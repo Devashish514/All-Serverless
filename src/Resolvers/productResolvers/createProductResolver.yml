@@ -39,7 +39,7 @@ Resources:
         }
 
         /**
-        * Helper function to create a new item
+        * Helper function
         * @returns a PutItem request
         */
         function dynamodbPutRequest({ key, values, condition: inCondObj }) {
