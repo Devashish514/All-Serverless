@@ -1,0 +1,17 @@
+Resources:
+  GraphQlSchema:
+    Type: "AWS::AppSync::GraphQLSchema"
+    Properties:
+      ApiId:
+        Fn::GetAtt:
+          - AppSyncApi
+          - ApiId
+      Definition:
+        Fn::Join:
+          - '\n'
+          - - Fn::Sub: |
+              file://schemas/userSchema.graphql
+          - Fn::Sub: |
+              file://schemas/productSchema.graphql
+          - Fn::Sub: |
+              file://schemas/orderSchema.graphql

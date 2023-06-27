@@ -1,0 +1,26 @@
+{
+  "name": "serverless_ecommerce_backend",
+  "version": "1.0.0",
+  "description": "This is the Implementation of a Serverless backend for an E-commerce website",
+  "main": "",
+  "scripts": {
+    "test": "NA"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Devashish514/All-Serverless.git"
+  },
+  "keywords": [
+    "serverless",
+    "ecommerce",
+    "aws",
+    "cloud",
+    "ci/cd"
+  ],
+  "author": "DG",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Devashish514/All-Serverless/issues"
+  },
+  "homepage": "https://github.com/Devashish514/All-Serverless#readme"
+}

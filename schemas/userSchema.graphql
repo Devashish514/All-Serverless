@@ -1,0 +1,41 @@
+# User Schema Definition
+
+type User {
+    id: String!
+    name: String!
+    email: String!
+    phone: Int!
+    profile: String
+    gender: GenderEnum
+    createdAt: AWSDate!
+    updatedAt: AWSDate!
+}
+
+type Query {
+    getUserById(id: String!): User
+    getAllUsers: [User!]!
+}
+
+type Mutation {
+    createUser(
+        name: String!
+        email: String!
+        phone: Int!
+        profile: String
+        gender: GenderEnum
+    ): User!
+        @aws_auth(cognito_groups: ["Users"])
+    updateUser(
+        name: String,
+        email: String
+    ): User!
+        @aws_auth(cognito_groups: ["Users"])
+    deleteUser(id: String!): String!
+        @aws_auth(cognito_groups: ["Users"])
+}
+
+enum GenderEnum {
+    MALE
+    FEMALE
+    OTHER
+}

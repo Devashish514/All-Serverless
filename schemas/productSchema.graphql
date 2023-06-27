@@ -1,0 +1,33 @@
+# Product Schema definition
+
+type Product {
+    productId: String!
+    name: String!
+    price: Int!
+    productType: String
+    description: String
+    createdAt: AWSDate!
+    updatedAt: AWSDate!
+}
+
+type Query {
+    getProductById(productId: String!): Product!
+    getAllProduct: [Product!]!
+}
+
+type Mutation {
+    createProduct(
+        name: String!
+        price: Int!
+        description: String 
+    ): Product!
+        @aws_auth(cognito_groups:["Super-Admin"])
+    updateProduct(
+        name: String
+        price: Int
+        description: String
+    ): Product!
+        @aws_auth(cognito_groups:["Super-Admin"])
+    deleteProduct(productId: String!): String!
+        @aws_auth(cognito_groups:["Super-Admin"])
+}

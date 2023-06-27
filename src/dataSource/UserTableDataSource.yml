@@ -1,0 +1,18 @@
+Resources:
+  UserTableDataSource:
+    Type: 'AWS::AppSync::DataSource'
+    Properties:
+      ApiId:
+        Fn::GetAtt:
+          - AppSyncApi
+          - ApiId
+      Name: "Users"
+      Description: User Data Source
+      Type: AMAZON_DYNAMODB
+      ServiceRoleArn:
+        Ref: DynamoDbAccessRole
+      DynamoDBConfig:
+        AwsRegion:
+          Ref: AWSRegion
+        TableName: 
+          Fn::Join: ['-', ['ecommerce', Ref: Stage, 'users']]
