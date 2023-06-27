@@ -6,9 +6,8 @@ Resources:
         Fn::GetAtt:
           - AppSyncApi
           - ApiId
-      Definition:
-        Fn::Join:
-          - '\n'
+      Definition: !Join
+        - '\n'
         - - !Sub >-
             file://schemas/userSchema.graphql
           - !Sub >-
