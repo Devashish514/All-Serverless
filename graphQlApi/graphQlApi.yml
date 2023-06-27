@@ -21,5 +21,3 @@ Parameters:
     Type: String
   DynamoDbAccessRole:
     Type: String
-  LambdaAccessRole:
-    Type: String
