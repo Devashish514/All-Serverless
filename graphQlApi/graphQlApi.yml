@@ -21,3 +21,5 @@ Parameters:
     Type: String
   DynamoDbAccessRole:
     Type: String
+  CognitoUserPoolId:
+    Type: String
