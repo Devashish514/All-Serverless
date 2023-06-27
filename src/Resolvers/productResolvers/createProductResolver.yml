@@ -8,9 +8,6 @@ Resources:
         Fn::GetAtt: UserTableDataSource.Name
       TypeName: Mutation
       FieldName: createProduct
-      Runtime:
-        Name: 'APPSYNC_JS'
-        RuntimeVersion: '1.0.0'
       Code: |
         import { util } from '@aws-appsync/utils';
 
