@@ -9,9 +9,7 @@ Resources:
       Definition:
         Fn::Join:
           - '\n'
-          - - Fn::Sub: |
-              file://schemas/userSchema.graphql
-          - Fn::Sub: |
-              file://schemas/productSchema.graphql
-          - Fn::Sub: |
-              file://schemas/orderSchema.graphql
+        - - !Sub >-
+            file://schemas/userSchema.graphql
+          - !Sub >-
+            file://schemas/productSchema.graphql
