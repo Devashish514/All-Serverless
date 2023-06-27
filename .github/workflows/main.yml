@@ -1,0 +1,29 @@
+name: Deploy CloudFormation stack
+
+on:
+  push:
+    branches:
+      - ecommerce
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+      - name: Merge YAML files to create CloudFormation template
+        run: |-
+          npm i -g merge-yaml-cli
+          merge-yaml -i graphQlApi/*.yml schema/*.yml src/'**'/*.yml -o template.yml
+      - name: Upload template to S3
+        run: aws s3 sync ./ s3://cloudformationTemplate/ecommerce-template --delete
+      - name: Deploy to AWS CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: ecommerceBackend
+          template: https://cloudformationTemplate.s3.ap-south-1.amazonaws.com/ecommerce-template/template.yml
+          parameter-overrides: "Stage=dev,AppSyncApiName=Ecommerce,AWSRegion=ap-south-1"
