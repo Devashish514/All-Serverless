@@ -8,7 +8,7 @@ Resources:
           - ApiId
       Definition: !Join
         - '\n'
-        - - !Sub >-
-            file://schemas/userSchema.graphql
-          - !Sub >-
-            file://schemas/productSchema.graphql
+        - - !Sub
+            - 'file://schemas/userSchema.graphql'
+          - !Sub
+            - 'file://schemas/productSchema.graphql'
