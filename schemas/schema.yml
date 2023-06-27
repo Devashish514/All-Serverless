@@ -6,9 +6,64 @@ Resources:
         Fn::GetAtt:
           - AppSyncApi
           - ApiId
-      Definition: !Join
-        - '\n'
-        - - !Sub
-            - 'file://schemas/userSchema.graphql'
-          - !Sub
-            - 'file://schemas/productSchema.graphql'
+      Definition: |
+        type Mutation {
+          createUser(
+            name: String!
+            email: String!
+            phone: Int!
+            profile: String
+            gender: GenderEnum
+          ): User!
+            @aws_auth(cognito_groups: ["Users"])
+
+          updateUser(
+              name: String,
+              email: String
+          ): User!
+            @aws_auth(cognito_groups: ["Users"])
+          
+          deleteUser(id: String!): String!
+            @aws_auth(cognito_groups: ["Users"])
+        }
+        
+        type Query {
+          getUserById(id: String!): User
+          getAllUsers: [User!]!
+          getProductById(productId: String!): Product!
+          getAllProduct: [Product!]! 
+        }
+
+        type User {
+          id: String!
+          name: String!
+          email: String!
+          phone: Int!
+          profile: String
+          gender: GenderEnum
+          createdAt: AWSDate!
+          updatedAt: AWSDate!
+        }
+
+        type Product {
+          productId: String!
+          name: String!
+          price: Int!
+          productType: String
+          description: String
+          createdAt: AWSDate!
+          updatedAt: AWSDate!
+        }
+
+        enum GenderEnum {
+          MALE
+          FEMALE
+          OTHER
+        }
+
+        schema {
+          query: Query
+          mutation: Mutation
+          subscription: Subscription
+        }
+
