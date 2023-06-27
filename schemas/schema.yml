@@ -25,6 +25,13 @@ Resources:
           
           deleteUser(id: String!): String!
             @aws_auth(cognito_groups: ["Users"])
+
+          createProduct(
+            name: String!
+            price: Int!
+            description: String 
+          ): Product!
+            @aws_auth(cognito_groups:["Super-Admin"])
         }
         
         type Query {
