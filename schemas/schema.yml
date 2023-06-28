@@ -43,7 +43,7 @@ Resources:
           # get Indivisual product by its productId
           getProductById(productId: String!): Product!
 
-          getAllProducts: [Product!]!
+          getAllProducts: [Product]
 
           # Get List of Product by its type
           getProductTypeList: [String!]!
