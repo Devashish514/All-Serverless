@@ -29,16 +29,27 @@ Resources:
           createProduct(
             name: String!
             price: Int!
-            description: String 
+            description: String!
+            productType: ProductTypeEnum!
           ): Product!
             @aws_auth(cognito_groups:["Super-Admin"])
         }
-        
+
         type Query {
           getUserById(id: String!): User
+          
           getAllUsers: [User!]!
+
+          # get Indivisual product by its productId
           getProductById(productId: String!): Product!
-          getAllProduct: [Product!]! 
+
+          getAllProducts: [Product!]!
+
+          # Get List of Product by its type
+          getProductTypeList: [String!]!
+
+          # Get all prooducts for a indivisual type
+          getAllProductsForType(type: String!): [Product!]!
         }
 
         type User {
@@ -56,8 +67,8 @@ Resources:
           productId: String!
           name: String!
           price: Int!
-          productType: String
-          description: String
+          productType: ProductTypeEnum!
+          description: String!
           createdAt: AWSDate!
           updatedAt: AWSDate!
         }
@@ -68,8 +79,13 @@ Resources:
           OTHER
         }
 
+        enum ProductTypeEnum {
+          FASHION
+          ELECTRONIC
+          FURNITURE
+        }
+
         schema {
           query: Query
           mutation: Mutation
         }
-

@@ -1,0 +1,24 @@
+Resources:
+  GetProductByIdResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId:
+        Fn::GetAtt: AppSyncApi.ApiId
+      DataSourceName:
+        Fn::GetAtt: ProductTableDataSource.Name
+      TypeName: Query
+      FieldName: getProductById
+      RequestMappingTemplate: |
+        {
+          "version": "2017-02-28",
+          "operation": 'Query',
+          "query": {
+            "expression": "productId = :productId",
+            "expressionValues": {
+              ":productId": $util.dynamodb.toDynamoDBJson($ctx.args.productId)
+            }
+          }
+        }
+      ResponseMappingTemplate: |
+        $util.toJson($ctx.result.Items[0])
+    DependsOn: GraphQlSchema

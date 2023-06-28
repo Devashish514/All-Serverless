@@ -1,0 +1,24 @@
+Resources:
+  GetUserByIdResolvers:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId:
+        Fn::GetAtt: AppSyncApi.ApiId
+      DataSourceName:
+        Fn::GetAtt: UserTableDataSource.Name
+      TypeName: Query
+      FieldName: getUserById
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "Query",
+          "query": {
+            "expression" : "id = :userId",
+            "expressionValues": {
+              ":userId": $util.dynamodb.toDynamoDBJson($ctx.args.id)
+            }
+          }
+        }
+      ResponseMappingTemplate: |
+        $util.toJson($ctx.result.Items[0])
+    DependsOn: GraphQlSchema

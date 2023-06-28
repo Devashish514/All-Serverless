@@ -1,0 +1,24 @@
+Resources:
+  GetAllProductsForTypeResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId:
+        Fn::GetAtt: AppSyncApi.ApiId
+      DataSourceName:
+        Fn::GetAtt: ProductTableDataSource.Name
+      TypeName: Query
+      FieldName: getAllProductsForType
+      RequestMappingTemplate: |
+        {
+          "version": "2017-02-28",
+          "operation": 'Scan',
+          "filter": {
+            "expression": "productType = :type",
+            "expressionValues": {
+              ":type": $util.dynamodb.toDynamoDBJson($ctx.args.type)
+            }
+          }
+        }
+      ResponseMappingTemplate: |
+        $util.toJson($ctx.result.Items)
+    DependsOn: GraphQlSchema
