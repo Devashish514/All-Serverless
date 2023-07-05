@@ -1,5 +1,5 @@
 Resources:
-  ProductTableDataSource:
+  InventoryTableDataSource:
     Type: 'AWS::AppSync::DataSource'
     Properties:
       ApiId:
