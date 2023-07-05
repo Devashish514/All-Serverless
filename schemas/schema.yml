@@ -15,7 +15,6 @@ Resources:
             profile: String
             gender: GenderEnum
           ): User!
-            @aws_auth(cognito_groups: ["Users"])
 
           updateUser(
               name: String,
@@ -24,7 +23,7 @@ Resources:
             @aws_auth(cognito_groups: ["Users"])
           
           deleteUser(id: String!): String!
-            @aws_auth(cognito_groups: ["Users"])
+            @aws_auth(cognito_groups: ["Super-Admin"])
 
           createProduct(
             name: String!
@@ -32,24 +31,42 @@ Resources:
             description: String!
             productType: ProductTypeEnum!
           ): Product!
-            @aws_auth(cognito_groups:["Super-Admin"])
+            @aws_auth(cognito_groups: ["Super-Admin"])
+          
+          updateInventory(
+            product: ID!, quantity: Int!
+          ): Inventory
+
+          createInventory(
+            product: ID!
+            quantity: Int!
+          ): Inventory
+            @aws_auth(cognito_groups: ["Super-Admin"])
+
         }
 
         type Query {
           getUserById(id: String!): User
+            @aws_auth(cognito_groups: ["Super-Admin","Users"])
           
-          getAllUsers: [User!]!
+          getAllUsers: [User]
+            @aws_auth(cognito_groups: ["Super-Admin","Users"])
 
           # get Indivisual product by its productId
-          getProductById(productId: String!): Product!
+          getProductById(productId: String!): Product
 
           getAllProducts: [Product]
 
           # Get List of Product by its type
-          getProductTypeList: [String!]!
+          getProductTypeList: [String]
 
           # Get all prooducts for a indivisual type
-          getAllProductsForType(type: String!): [Product!]!
+          getAllProductsForType(type: String!): [Product]
+
+          # Inventory GET API's
+          getInventory: [Inventory]
+            @aws_auth(cognito_groups: ["Super-Admin"])
+
         }
 
         type User {
@@ -71,6 +88,12 @@ Resources:
           description: String!
           createdAt: AWSDate!
           updatedAt: AWSDate!
+        }
+
+        type Inventory {
+          inventoryId: String!
+          productId: ID!
+          quantity: Int!
         }
 
         enum GenderEnum {

@@ -1,0 +1,20 @@
+type Inventory {
+    inventoryId: String!
+    product: ID!
+    quantity: Int!
+}
+
+type Query {
+  inventory: [Inventory!]!
+}
+
+ type Mutation {
+    updateInventory(
+        product: String!, quantity: Int!
+     ): Inventory
+
+  createInventory(
+     product: ID!
+     quantity: Int!
+    ): Inventory
+}
